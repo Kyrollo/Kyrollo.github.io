@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: master-portfolio
+    ports:
+      - "3050:3050"
+    environment:
+      - PORT=3050
+    restart: unless-stopped
