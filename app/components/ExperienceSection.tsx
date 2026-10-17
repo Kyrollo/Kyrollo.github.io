@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Briefcase, Calendar, MapPin, CheckCircle2 } from 'lucide-react';
+import { Briefcase, Calendar, MapPin, CheckCircle2, ExternalLink, Sparkles } from 'lucide-react';
 import { PROFILE } from '../data/profileData';
 
 export default function ExperienceSection() {
@@ -47,6 +47,27 @@ export default function ExperienceSection() {
                   </span>
                 </div>
               </div>
+
+              {/* Created Project Callout */}
+              {exp.projectCreated && (
+                <div className="timeline-project-created-badge">
+                  <div className="project-badge-left">
+                    <Sparkles size={15} className="text-cyan" />
+                    <span className="badge-label">Key Platform Shipped:</span>
+                    <strong className="badge-project-name">{exp.projectCreated.name}</strong>
+                  </div>
+                  <a
+                    href={exp.projectCreated.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="badge-project-link"
+                    title="View Shipped Project on GitHub"
+                  >
+                    <span>View Repository</span>
+                    <ExternalLink size={13} />
+                  </a>
+                </div>
+              )}
 
               <p className="timeline-desc">{exp.description}</p>
 

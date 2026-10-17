@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Cpu, Github, Linkedin, Mail, Download, ArrowUp } from 'lucide-react';
+import { Github, Linkedin, Mail, Download, ArrowUp } from 'lucide-react';
 import { PROFILE } from '../data/profileData';
 
 export default function Footer() {
@@ -14,22 +14,19 @@ export default function Footer() {
       <div className="footer-content-wrap">
         <div className="footer-top-row">
           <div className="footer-brand">
-            <div className="footer-avatar-box">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={PROFILE.avatar} alt={PROFILE.name} className="footer-avatar-img" />
-            </div>
-            <div>
+            <span className="brand-monogram">KM</span>
+            <span className="brand-dot">.</span>
+            <div className="footer-brand-info">
               <h4 className="footer-name">{PROFILE.name}</h4>
               <p className="footer-title">{PROFILE.title}</p>
             </div>
           </div>
 
           <div className="footer-links-group">
-            <a href="#slider" className="footer-link">Featured Systems</a>
-            <a href="#projects" className="footer-link">All Projects</a>
+            <a href="#projects" className="footer-link">Projects</a>
             <a href="#experience" className="footer-link">Experience</a>
+            <a href="#skills" className="footer-link">Skills & Methodology</a>
             <a href="#education" className="footer-link">Education</a>
-            <a href="#skills" className="footer-link">Skills</a>
             <a href="#contact" className="footer-link">Contact</a>
             <a href={PROFILE.cvPath} download="Kerollos_Mansour_CV.pdf" className="footer-link highlight">
               Download CV (PDF)
@@ -44,13 +41,8 @@ export default function Footer() {
         <div className="footer-divider" />
 
         <div className="footer-bottom-row">
-          <div className="footer-hardware-spec">
-            <Cpu size={15} className="text-cyan" />
-            <span>{PROFILE.hardware}</span>
-          </div>
-
           <p className="footer-copyright">
-            © 2026 {PROFILE.name}. Built with Next.js 14, React 19, FastAPI, and PyTorch. Zero mock answers.
+            © 2026 {PROFILE.name}. All rights reserved.
           </p>
 
           <div className="footer-social-icons">

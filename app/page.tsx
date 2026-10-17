@@ -3,12 +3,10 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
-import PhilosophySection from './components/PhilosophySection';
-import ProjectSlider from './components/ProjectSlider';
-import ProjectsGrid from './components/ProjectsGrid';
+import ProjectsSection from './components/ProjectsSection';
 import ExperienceSection from './components/ExperienceSection';
-import EducationSection from './components/EducationSection';
 import SkillsMatrix from './components/SkillsMatrix';
+import EducationSection from './components/EducationSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import ProjectModal from './components/ProjectModal';
@@ -25,48 +23,32 @@ export default function MasterPortfolioPage() {
     setSelectedModalProject(null);
   };
 
-  const handleJumpToSlider = (project: ProjectData) => {
-    const sliderElement = document.getElementById('slider');
-    if (sliderElement) {
-      sliderElement.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <div className="portfolio-app-root">
-      {/* Sticky Glassmorphic Navbar */}
+      {/* Minimalist Top Navbar */}
       <Navbar />
 
       <main className="portfolio-main-content">
-        {/* Hero Section with Photo Integration & Key CTAs */}
+        {/* Minimalist Hero Section with Seamless Photo Cutout */}
         <HeroSection />
 
-        {/* Engineering Philosophy & Production Standards */}
-        <PhilosophySection />
+        {/* Unified Projects Section (Showcase & Catalog) */}
+        <ProjectsSection onOpenModal={handleOpenModal} />
 
-        {/* Featured Project Slider with 1080p Video Demos & Screenshot Gallery */}
-        <ProjectSlider onOpenModal={handleOpenModal} />
-
-        {/* Complete Searchable 13-Platform Catalog */}
-        <ProjectsGrid
-          onSelectProject={handleOpenModal}
-          onJumpToSlider={handleJumpToSlider}
-        />
-
-        {/* Professional Work Experience Timeline */}
+        {/* Professional Career Experience Timeline */}
         <ExperienceSection />
+
+        {/* Engineering Methodology & Technical Skills Matrix */}
+        <SkillsMatrix />
 
         {/* Education & Industry Certifications */}
         <EducationSection />
 
-        {/* Core Technical Skills Matrix */}
-        <SkillsMatrix />
-
-        {/* Direct Contact Hub & Resume Download */}
+        {/* Direct Contact & Resume Hub */}
         <ContactSection />
       </main>
 
-      {/* Global Systems Engineer Footer */}
+      {/* Global Minimalist Footer */}
       <Footer />
 
       {/* Deep-Dive Case Study Modal */}

@@ -35,8 +35,8 @@ export default function PhilosophySection() {
     {
       icon: <Cpu size={24} className="text-amber" />,
       title: 'Local GPU Acceleration',
-      description: 'Production inference and QLoRA fine-tuning powered by an NVIDIA RTX A5000 (16GB GDDR6 VRAM, CUDA 13.4), delivering sub-15ms TTFT with zero cloud reliance.',
-      badge: 'RTX A5000',
+      description: 'Production inference and QLoRA fine-tuning powered by an NVIDIA Dedicated NVIDIA GPU (16GB GDDR6 VRAM, CUDA 13.4), delivering sub-15ms TTFT with zero cloud reliance.',
+      badge: 'Dedicated NVIDIA GPU',
     },
   ];
 

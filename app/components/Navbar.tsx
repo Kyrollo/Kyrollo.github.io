@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Download, Menu, X, Cpu } from 'lucide-react';
+import { Github, Linkedin, Download, Menu, X } from 'lucide-react';
 import { PROFILE } from '../data/profileData';
 
 export default function Navbar() {
@@ -10,117 +10,112 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { label: 'Featured Systems', href: '#slider' },
-    { label: 'All Projects (13)', href: '#projects' },
+    { label: 'Projects', href: '#projects' },
     { label: 'Experience', href: '#experience' },
+    { label: 'Methodology & Skills', href: '#skills' },
     { label: 'Education', href: '#education' },
-    { label: 'Skills', href: '#skills' },
     { label: 'Contact', href: '#contact' },
   ];
 
   return (
-    <header className={`navbar-wrapper ${scrolled ? 'scrolled' : ''}`}>
-      <nav className="navbar-container">
-        {/* Brand */}
-        <a href="#" className="nav-brand">
-          <div className="nav-avatar-ring">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={PROFILE.avatar} alt={PROFILE.name} className="nav-avatar-img" />
-          </div>
-          <div className="nav-brand-text">
-            <span className="nav-name">{PROFILE.name}</span>
-            <span className="nav-role">Software AI Engineer</span>
-          </div>
+    <header className={`navbar-header-clean ${scrolled ? 'scrolled' : ''}`}>
+      <div className="navbar-clean-container">
+        {/* Monogram Brand */}
+        <a href="#" className="nav-brand-clean">
+          <span className="brand-monogram">KM</span>
+          <span className="brand-dot">.</span>
         </a>
 
         {/* Desktop Navigation Links */}
-        <div className="nav-menu-desktop">
+        <nav className="nav-links-clean">
           {navLinks.map((link) => (
-            <a key={link.href} href={link.href} className="nav-menu-item">
+            <a key={link.href} href={link.href} className="nav-clean-item">
               {link.label}
             </a>
           ))}
-        </div>
+        </nav>
 
-        {/* Actions */}
-        <div className="nav-actions">
+        {/* Desktop Right Actions */}
+        <div className="nav-actions-clean">
+          <a
+            href={PROFILE.cvPath}
+            download="Kerollos_Mansour_CV.pdf"
+            className="nav-cv-pill"
+            title="Download CV (PDF)"
+          >
+            <Download size={14} />
+            <span>CV</span>
+          </a>
+
+          <div className="nav-social-divider" />
+
           <a
             href={PROFILE.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="nav-icon-btn"
+            className="nav-social-icon-btn"
             title="GitHub Profile"
           >
             <Github size={18} />
           </a>
+
           <a
             href={PROFILE.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="nav-icon-btn"
+            className="nav-social-icon-btn"
             title="LinkedIn Profile"
           >
             <Linkedin size={18} />
           </a>
-          <a
-            href={PROFILE.cvPath}
-            download="Kerollos_Mansour_CV.pdf"
-            className="btn-download-cv"
-            title="Download Full Curriculum Vitae"
-          >
-            <Download size={15} />
-            <span>Download CV</span>
-          </a>
 
           {/* Mobile Menu Button */}
           <button
-            className="mobile-menu-toggle"
+            className="nav-mobile-toggle"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle Navigation Menu"
+            aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
-      </nav>
+      </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="mobile-menu-drawer">
-          <div className="mobile-nav-links">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="mobile-nav-item"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-          <div className="mobile-nav-actions">
+        <div className="nav-mobile-menu">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="nav-mobile-link"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {link.label}
+            </a>
+          ))}
+          <div className="nav-mobile-footer">
             <a
               href={PROFILE.cvPath}
               download="Kerollos_Mansour_CV.pdf"
-              className="btn-download-cv mobile"
+              className="btn-clean-secondary mobile"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <Download size={16} />
+              <Download size={15} />
               <span>Download CV (PDF)</span>
             </a>
-            <div className="mobile-social-row">
-              <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" className="mobile-social-link">
-                <Github size={18} /> GitHub
+            <div className="mobile-social-group">
+              <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" className="nav-social-icon-btn">
+                <Github size={18} />
               </a>
-              <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="mobile-social-link">
-                <Linkedin size={18} /> LinkedIn
+              <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="nav-social-icon-btn">
+                <Linkedin size={18} />
               </a>
             </div>
           </div>

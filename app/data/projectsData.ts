@@ -46,20 +46,20 @@ export const PROJECTS_DATA: ProjectData[] = [
     category: 'Local Inference & Fine-Tuning',
     tier: 'Flagship',
     repo: 'https://github.com/Kyrollo/switchyard',
-    summary: 'High-performance private LLM gateway unifying local Ollama serving on RTX A5000 and cloud providers with virtual keys, token bucket quotas, and audit logging.',
+    summary: 'High-performance private LLM gateway unifying local Ollama serving on dedicated GPUs and cloud providers with virtual keys, token bucket quotas, and audit logging.',
     problemStatement: 'Enterprise teams deploying LLM applications face runaway API costs, vendor lock-in, compliance risks, and lack of quota enforcement when routing between local private GPUs and cloud models.',
-    solutionDetails: 'Switchyard acts as an intelligent OpenAI-compatible proxy that dynamically routes queries across local Ollama instances (RTX A5000 GPU) and external providers (OpenAI, Anthropic, Groq). It enforces granular token bucket rate limits, virtual team API keys, and tamper-proof audit trails with zero performance degradation.',
+    solutionDetails: 'Switchyard acts as an intelligent OpenAI-compatible proxy that dynamically routes queries across local Ollama instances and external providers (OpenAI, Anthropic, Groq). It enforces granular token bucket rate limits, virtual team API keys, and tamper-proof audit trails with zero performance degradation.',
     architecture: {
       overview: 'Client requests hit the FastAPI gateway over HTTP/SSE. The routing engine checks token bucket quotas in Redis, looks up virtual key authorizations in PostgreSQL, routes requests to Ollama or cloud backends, and logs spans asynchronously via Celery and OpenTelemetry.',
       diagramFlow: [
         'Client Application (OpenAI SDK / HTTP SSE)',
         'FastAPI Gateway & Token Bucket Rate Limiter (Redis)',
-        'Routing Policy & Model Arbiter (Local RTX A5000 vs Cloud Groq/OpenAI)',
+        'Routing Policy & Model Arbiter (Local GPU vs Cloud Groq/OpenAI)',
         'Asynchronous Audit Logging & Metric Telemetry (PostgreSQL & OpenTelemetry)',
       ],
       stages: [
         { step: '01', title: 'Ingress & Quota Check', detail: 'Validates virtual API keys, checks sliding-window token quotas in Redis, and enforces organizational spend limits.' },
-        { step: '02', title: 'Dynamic Arbiter', detail: 'Selects optimal provider based on token count, privacy tags, and real-time RTX A5000 GPU utilization.' },
+        { step: '02', title: 'Dynamic Arbiter', detail: 'Selects optimal provider based on token count, privacy tags, and real-time GPU utilization.' },
         { step: '03', title: 'Streaming Relay', detail: 'Streams tokens directly to client via Server-Sent Events (SSE) with KV-cache optimization.' },
         { step: '04', title: 'Async Audit Flush', detail: 'Flushes tamper-proof prompt/completion metadata to PostgreSQL via background Celery workers.' },
       ],
@@ -83,7 +83,7 @@ export const PROJECTS_DATA: ProjectData[] = [
       { src: '/media/switchyard/screenshots/02_workbench_studio.png', title: 'Interactive Gateway Workbench', description: 'Live query testbed with dynamic routing selection and token generation metrics.' },
       { src: '/media/switchyard/screenshots/03_analysis_results.png', title: 'Request Diagnostics & Token Breakdown', description: 'Comprehensive token cost analysis and prompt completion inspection.' },
       { src: '/media/switchyard/screenshots/04_telemetry_metrics.png', title: 'Throughput & Latency Telemetry', description: 'Real-time GPU VRAM utilization, TTFT histograms, and error rates.' },
-      { src: '/media/switchyard/screenshots/01_tab_routing_policy.png', title: 'Routing Policy Rules Engine', description: 'Configurable rules prioritizing local RTX A5000 vs fallback cloud endpoints.' },
+      { src: '/media/switchyard/screenshots/01_tab_routing_policy.png', title: 'Routing Policy Rules Engine', description: 'Configurable rules prioritizing local GPU vs fallback cloud endpoints.' },
       { src: '/media/switchyard/screenshots/03_tab_gpu_registry.png', title: 'GPU Node Registry', description: 'Active node health, VRAM allocation, and PagedAttention status.' },
       { src: '/media/switchyard/screenshots/04_tab_virtual_keys.png', title: 'Virtual API Keys & Quota Studio', description: 'Manage department keys, tier limits, and monthly token budgets.' },
       { src: '/media/switchyard/screenshots/05_tab_audit_logs.png', title: 'Audit Trail & Compliance Logs', description: 'Searchable audit logs recording user ID, timestamp, and model responses.' },
@@ -628,13 +628,13 @@ export const PROJECTS_DATA: ProjectData[] = [
     repo: 'https://github.com/Kyrollo/tuneforge',
     summary: 'LoRA/QLoRA parameter-efficient fine-tuning studio with real-time SVG loss curves, VRAM calculus, JSONL dataset validators, and adapter registry.',
     problemStatement: 'Fine-tuning modern open-weights LLMs on local GPUs frequently results in Out-Of-Memory (OOM) crashes, corrupted datasets, and lack of visual progress monitoring.',
-    solutionDetails: 'TuneForge provides an interactive studio for QLoRA fine-tuning on consumer/workstation GPUs (NVIDIA RTX A5000). It features automated VRAM memory calculus, strict JSONL dataset validation, live SVG training loss telemetry, and 1-click adapter merging and GGUF export.',
+    solutionDetails: 'TuneForge provides an interactive studio for QLoRA fine-tuning on consumer and workstation GPUs. It features automated VRAM memory calculus, strict JSONL dataset validation, live SVG training loss telemetry, and 1-click adapter merging and GGUF export.',
     architecture: {
       overview: 'Dataset validation parses training files before training launches. The VRAM calculus engine computes optimal batch size and gradient accumulation. Hugging Face TRL SFTTrainer executes QLoRA training while streaming loss curves in real-time.',
       diagramFlow: [
         'JSONL Dataset Ingestion & Validation',
         'VRAM Estimation Calculus (4-Bit NF4, LoRA Rank & Alpha)',
-        'Hugging Face PEFT + TRL SFTTrainer on RTX A5000',
+        'Hugging Face PEFT + TRL SFTTrainer on Local GPU',
         'Real-Time SVG Loss Telemetry & Adapter Weights Export',
       ],
       stages: [
@@ -647,9 +647,9 @@ export const PROJECTS_DATA: ProjectData[] = [
     technologies: {
       frontend: ['React 19', 'Tailwind CSS', 'SVG Charts', 'Vite'],
       backend: ['FastAPI', 'Python 3.12', 'PyTorch', 'BitsAndBytes'],
-      ai_ml: ['Hugging Face PEFT', 'TRL (SFTTrainer)', 'Transformers', 'CUDA 13.4'],
+      ai_ml: ['Hugging Face PEFT', 'TRL (SFTTrainer)', 'Transformers', 'CUDA Acceleration'],
       data_storage: ['Local Model Registry', 'PostgreSQL 16'],
-      devops_infra: ['NVIDIA RTX A5000 16GB GPU', 'Docker'],
+      devops_infra: ['GPU CUDA Acceleration', 'Docker'],
     },
     metrics: {
       'Perplexity Reduction': '-86.0%',

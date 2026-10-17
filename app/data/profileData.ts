@@ -11,7 +11,6 @@ export interface CertificationItem {
   title: string;
   issuer: string;
   date: string;
-  badge?: string;
   skills: string[];
 }
 
@@ -21,6 +20,11 @@ export interface ExperienceItem {
   period: string;
   location: string;
   description: string;
+  projectCreated?: {
+    name: string;
+    path: string;
+    repo: string;
+  };
   achievements: string[];
   techStack: string[];
 }
@@ -33,7 +37,9 @@ export interface SkillCategory {
 
 export interface ProfileData {
   name: string;
+  monogram: string;
   avatar: string;
+  cutoutAvatar: string;
   title: string;
   tagline: string;
   bio: string;
@@ -44,12 +50,14 @@ export interface ProfileData {
   github: string;
   linkedin: string;
   cvPath: string;
-  hardware: string;
   stats: {
     projectsCount: number;
-    flagshipCount: number;
-    testsPassing: string;
     experienceYears: string;
+  };
+  methodology: {
+    title: string;
+    description: string;
+    pillars: { title: string; description: string; tag: string }[];
   };
   education: EducationItem[];
   certifications: CertificationItem[];
@@ -59,10 +67,12 @@ export interface ProfileData {
 
 export const PROFILE: ProfileData = {
   name: 'Kerollos Mansour',
+  monogram: 'KM.',
   avatar: '/kero.jpeg',
-  title: 'Senior Software AI Engineer | LLMOps & Agent Architect',
-  tagline: 'Architecting Autonomous AI Platforms & Production LLM Infrastructure',
-  bio: 'Software AI Engineer with a degree in Computer Science and Artificial Intelligence from Cairo University. Proven track record of designing, building, and shipping production-grade software systems end-to-end — from high-throughput backend architecture and microservices to multi-agent reasoning graphs, hybrid RAG monoliths, and enterprise LLM firewalls. Zero mock answers, 100% pytest pass rates, and verified real-world benchmarks.',
+  cutoutAvatar: '/kero_cutout.png',
+  title: 'ML & AI Engineer',
+  tagline: 'Building production-ready machine learning and LLM systems',
+  bio: 'AI Engineer building production-ready machine learning and LLM systems, with hands-on experience in model training and evaluation, dataset preprocessing, RAG pipelines with vector databases, secure API integrations, and scalable FastAPI backends. I focus on improving model performance and turning AI workflows into reliable deployed services.',
   email: 'kirolsmansour@gmail.com',
   phone: '+20 128 435 5306',
   location: 'Cairo, Egypt',
@@ -70,12 +80,35 @@ export const PROFILE: ProfileData = {
   github: 'https://github.com/Kyrollo',
   linkedin: 'https://www.linkedin.com/in/kerollos-mansour-bb22b321a/',
   cvPath: '/cv/Kerollos_Mansour_CV.pdf',
-  hardware: 'NVIDIA RTX A5000 GPU (16GB GDDR6 VRAM • CUDA 13.4)',
   stats: {
     projectsCount: 13,
-    flagshipCount: 5,
-    testsPassing: '100%',
     experienceYears: '2+ Years',
+  },
+  methodology: {
+    title: 'Engineering Methodology & Approach',
+    description: 'How I design, build, and deploy production machine learning and AI software systems from end-to-end.',
+    pillars: [
+      {
+        title: 'End-to-End System Ownership',
+        description: 'Owning the full product lifecycle: requirements gathering, model selection, prompt engineering, backend architecture, testing, containerization, and production deployment.',
+        tag: 'Architecture to Prod',
+      },
+      {
+        title: 'Hybrid & Graph-Augmented RAG',
+        description: 'Going beyond basic vector search by fusing dense embeddings with sparse lexical indexing (BM25) and knowledge graph traversal (Apache AGE) with reciprocal rank fusion and cross-encoder reranking.',
+        tag: 'Grounded Retrieval',
+      },
+      {
+        title: 'Autonomous Multi-Agent Design',
+        description: 'Architecting coordinated teams of specialized AI agents using LangGraph with state machines, tool calling, validation loops, and human-in-the-loop controls for complex enterprise workflows.',
+        tag: 'Agentic Workflows',
+      },
+      {
+        title: 'Cloud & Modern MLOps Excellence',
+        description: 'Deploying scalable services across GCP (Vertex AI, Cloud Run) and local GPU clusters with Docker, Redis caching, async Celery workers, and automated CI/CD workflows.',
+        tag: 'GCP & Containerization',
+      },
+    ],
   },
   education: [
     {
@@ -83,12 +116,12 @@ export const PROFILE: ProfileData = {
       institution: 'Cairo University',
       period: 'Sep 2021 – Jul 2025',
       specialization: 'Artificial Intelligence',
-      description: 'Specialized in Artificial Intelligence, machine learning algorithms, deep neural network architectures, and high-performance computing.',
+      description: 'Focused on Artificial Intelligence, machine learning algorithms, deep neural network architectures, and high-performance software engineering.',
       highlights: [
-        'Built solid mathematical and algorithmic foundations in data structures, algorithms, and OOP.',
+        'Strong algorithmic and mathematical foundations in data structures, algorithms, and object-oriented design.',
         'Explored machine learning, deep learning, computer vision, and natural language processing disciplines.',
-        'Developed production-oriented AI systems using PyTorch, TensorFlow, Keras, Pandas, and NumPy.',
-        'Applied distributed software engineering patterns, CI/CD automation, and agile methodologies.',
+        'Hands-on experience with PyTorch, TensorFlow, Keras, scikit-learn, Pandas, and NumPy.',
+        'Applied modern software engineering practices, CI/CD, and agile development methodologies.',
       ],
     },
   ],
@@ -97,7 +130,7 @@ export const PROFILE: ProfileData = {
       title: 'Supervised Machine Learning: Regression and Classification',
       issuer: 'DeepLearning.AI & Stanford Online / Coursera',
       date: 'Jan 2026',
-      skills: ['Linear Regression', 'Logistic Regression', 'Gradient Descent', 'Model Evaluation', 'Overfitting Prevention'],
+      skills: ['Linear Regression', 'Logistic Regression', 'Gradient Descent', 'Cost Functions', 'Regularization'],
     },
     {
       title: 'Advanced Learning Algorithms',
@@ -135,59 +168,69 @@ export const PROFILE: ProfileData = {
       techStack: ['Python', 'FastAPI', 'LangChain', 'Docker', 'PostgreSQL', 'Redis', 'Prometheus', 'Grafana'],
     },
     {
-      role: 'Intern Software Engineer',
+      role: 'AI Engineer',
       company: 'Fixed Solutions',
       period: 'Jun 2026 – Jul 2026',
       location: 'Cairo, Egypt',
-      description: 'Engineered a multi-user, multi-domain hybrid enterprise RAG system combining dense vector search, lexical BM25 search, and knowledge graph traversal.',
+      description: 'Designed and engineered FixedRAG, an enterprise multi-user hybrid RAG platform combining dense vector search, lexical BM25 search, and knowledge graph traversal.',
+      projectCreated: {
+        name: 'FixedRAG (Enterprise Hybrid RAG Monolith)',
+        path: 'projects/chatbot-fixed-solutions',
+        repo: 'https://github.com/Kyrollo/Chatbot-Fixed-Solutions-Rag-System',
+      },
       achievements: [
-        'Architected a unified FastAPI monolith consolidating 5 disparate microservices (domain, ingestion, retrieval, generation, evaluation), cutting network serialization overhead.',
-        'Constructed a 3-way hybrid retrieval engine fusing Qdrant dense vector search, PostgreSQL BM25, and Apache AGE graph traversal with Reciprocal Rank Fusion (RRF) and BGE Cross-Encoder reranking.',
-        'Built an asynchronous document ingestion pipeline using Celery and Redis with OCR (PaddleOCR, Surya fallback) and semantic chunking for PDF, DOCX, and CSV files.',
-        'Secured endpoints with Keycloak JWT authentication, role-based access control (RBAC), and TLS-terminated Caddy reverse proxies.',
-        'Instrumented full observability with Prometheus and Grafana dashboards and conducted rigorous Locust load testing to eliminate concurrency bottlenecks.',
+        'Created FixedRAG: engineered a multi-user, multi-domain RAG system combining dense vector search (Qdrant), BM25 sparse search (PostgreSQL), and graph traversal (Apache AGE), fused via Reciprocal Rank Fusion (RRF) and BGE Cross-Encoder reranking.',
+        'Architected a unified FastAPI monolith consolidating 5 backend services into a single deployable process, eliminating inter-service network serialization latency.',
+        'Built an asynchronous document ingestion pipeline using Celery and Redis with OCR (PaddleOCR, Surya) and semantic chunking for PDF, DOCX, and CSV files.',
+        'Secured the platform end-to-end with Keycloak JWT authentication, role-based access control (RBAC), and TLS-terminated Caddy reverse proxies across all service endpoints.',
+        'Extracted entities and relations (GLiNER + LLMs) to construct a knowledge graph layer (Apache AGE), enabling complex relational queries beyond standard vector search.',
       ],
-      techStack: ['FastAPI', 'Qdrant', 'PostgreSQL', 'Apache AGE', 'Celery', 'Redis', 'Keycloak', 'PaddleOCR', 'Caddy'],
+      techStack: ['FastAPI Monolith', 'Qdrant Vector DB', 'PostgreSQL', 'Apache AGE (Graph)', 'Celery', 'Redis', 'Keycloak', 'PaddleOCR', 'Caddy'],
     },
     {
-      role: 'Agentic AI Trainee',
+      role: 'Agentic AI Engineer Trainee',
       company: 'National Telecommunication Institute (NTI)',
       period: 'Jan 2025 – Apr 2026',
       location: 'Cairo, Egypt',
-      description: 'Completed an intensive 288-hour advanced technical program engineering and deploying production-grade agentic AI systems powered by modern LLMs.',
+      description: 'Completed an intensive 288-hour technical program on production-grade agentic AI systems, where I engineered and shipped TaskTune AI.',
+      projectCreated: {
+        name: 'TaskTune AI (Enterprise Work Orchestration Platform)',
+        path: 'projects/tasktune ai',
+        repo: 'https://github.com/Kyrollo/tasktune-ai',
+      },
       achievements: [
-        'Built autonomous and collaborative multi-agent architectures using LangChain and LangGraph to execute multi-step business logic.',
-        'Implemented advanced Self-RAG systems with query rewriting, dynamic routing, and hallucination evaluation gates.',
-        'Developed grounded conversational systems with persistent state machines and external tool integration.',
+        'Created TaskTune AI: an enterprise work orchestration platform powered by an ASP.NET Core 8 Web API, SQL Server 2025, and 5 Python AI agents orchestrated with LangGraph (Chatbot, Guidance, Tracking, Report, Email).',
+        'Built autonomous and collaborative multi-agent architectures using LangChain and LangGraph to execute complex business workflows with state machines.',
+        'Implemented advanced Self-RAG architectures with dynamic query routing, hallucination verification gates, and grounded citation anchors.',
       ],
-      techStack: ['LangGraph', 'LangChain', 'Python', 'Vector DBs', 'Autonomous Agents', 'RAG'],
+      techStack: ['LangGraph Multi-Agent', 'ASP.NET Core 8 Web API', 'Python 3.12', 'SQL Server 2025', 'FastAPI', 'Groq Llama 3.3'],
     },
   ],
   skillCategories: [
     {
-      category: 'AI & Agentic Systems',
+      category: 'AI, LLMs & Retrieval',
       icon: 'Bot',
-      skills: ['LangGraph Multi-Agent', 'LangChain', 'Hybrid RAG (Vector + BM25 + Graph)', 'Self-RAG', 'Ragas & LLM-as-a-Judge', 'Ollama Local Inference', 'Groq Llama 3.3 / Qwen', 'OpenAI Whisper', 'QLoRA PEFT Fine-Tuning'],
+      skills: ['LangGraph Multi-Agent', 'LangChain', 'LlamaIndex', 'Hybrid RAG (Vector + BM25 + Graph)', 'GraphRAG & Knowledge Graphs', 'Self-RAG', 'Ragas & LLM Evaluation', 'Hugging Face PEFT / LoRA / QLoRA', 'PyTorch', 'Whisper Speech ASR', 'vLLM / Ollama', 'Groq API'],
     },
     {
-      category: 'Backend & Architecture',
+      category: 'Cloud & MLOps',
+      icon: 'Cloud',
+      skills: ['Google Cloud Platform (GCP)', 'Vertex AI', 'Cloud Run', 'BigQuery', 'Cloud Storage (GCS)', 'Docker & Docker Compose', 'CI/CD Pipelines', 'MLflow', 'OpenTelemetry', 'Prometheus & Grafana'],
+    },
+    {
+      category: 'Backend & System Architecture',
       icon: 'Server',
-      skills: ['FastAPI', 'ASP.NET Core 8 Web API', 'C#', 'Python 3.12', 'Clean Architecture & CQRS', 'Microservices & Monoliths', 'Celery Asynchronous Tasks', 'Redis Caching & Queues', 'WebSockets & SSE'],
+      skills: ['FastAPI', 'Python 3.12', 'ASP.NET Core 8 Web API', 'C#', 'Microservices & Monoliths', 'Celery Async Workers', 'Redis Caching & Queues', 'RESTful APIs', 'WebSockets & SSE', 'Keycloak (JWT / RBAC)'],
     },
     {
-      category: 'Databases & Vector Engines',
+      category: 'Databases & Vector Stores',
       icon: 'Database',
-      skills: ['PostgreSQL 16', 'Qdrant Vector DB', 'Apache AGE (Graph DB)', 'SQL Server 2025', 'MySQL', 'Redis In-Memory'],
+      skills: ['PostgreSQL 16', 'Qdrant Vector DB', 'Apache AGE (Graph)', 'SQL Server 2025', 'MySQL', 'BigQuery', 'Redis In-Memory'],
     },
     {
-      category: 'MLOps, DevOps & Security',
-      icon: 'Shield',
-      skills: ['Docker & Docker Compose', 'Keycloak (JWT / RBAC)', 'Caddy TLS Reverse Proxy', 'OpenTelemetry Tracing', 'Prometheus & Grafana', 'Locust Load Testing', 'Pytest Suites', 'Git & GitHub Actions'],
-    },
-    {
-      category: 'Frontend Engineering',
+      category: 'Frontend & UI',
       icon: 'Layout',
-      skills: ['React 19', 'Next.js 14 App Router', 'TypeScript', 'Tailwind CSS', 'Cytoscape.js Graph Viz', 'HTML5 Web Audio / Video API'],
+      skills: ['React 19', 'Next.js 14 App Router', 'TypeScript', 'Tailwind CSS', 'Cytoscape.js Graph Viz', 'HTML5 Web Audio / Video'],
     },
   ],
 };
