@@ -11,7 +11,19 @@ export interface CertificationItem {
   title: string;
   issuer: string;
   date: string;
+  image: string;
   skills: string[];
+  description: string;
+}
+
+export interface CourseItem {
+  title: string;
+  platform: string;
+  issuer: string;
+  date: string;
+  badgeImage?: string;
+  skills: string[];
+  description: string;
 }
 
 export interface ExperienceItem {
@@ -32,6 +44,8 @@ export interface ExperienceItem {
 export interface SkillCategory {
   category: string;
   icon: string;
+  skillsCount: number;
+  tagline: string;
   skills: string[];
 }
 
@@ -39,7 +53,7 @@ export interface ProfileData {
   name: string;
   monogram: string;
   avatar: string;
-  cutoutAvatar: string;
+  heroPhoto: string;
   title: string;
   tagline: string;
   bio: string;
@@ -61,6 +75,7 @@ export interface ProfileData {
   };
   education: EducationItem[];
   certifications: CertificationItem[];
+  courses: CourseItem[];
   experience: ExperienceItem[];
   skillCategories: SkillCategory[];
 }
@@ -69,7 +84,7 @@ export const PROFILE: ProfileData = {
   name: 'Kerollos Mansour',
   monogram: 'KM.',
   avatar: '/kero.jpeg',
-  cutoutAvatar: '/kero_cutout.png',
+  heroPhoto: '/kero_hero_v2.png',
   title: 'ML & AI Engineer',
   tagline: 'Building production-ready machine learning and LLM systems',
   bio: 'AI Engineer building production-ready machine learning and LLM systems, with hands-on experience in model training and evaluation, dataset preprocessing, RAG pipelines with vector databases, secure API integrations, and scalable FastAPI backends. I focus on improving model performance and turning AI workflows into reliable deployed services.',
@@ -116,39 +131,68 @@ export const PROFILE: ProfileData = {
       institution: 'Cairo University',
       period: 'Sep 2021 – Jul 2025',
       specialization: 'Artificial Intelligence',
-      description: 'Focused on Artificial Intelligence, machine learning algorithms, deep neural network architectures, and high-performance software engineering.',
+      description: 'Comprehensive 4-year curriculum in Artificial Intelligence and Computer Science, establishing deep algorithmic, mathematical, and machine learning software foundations.',
       highlights: [
-        'Strong algorithmic and mathematical foundations in data structures, algorithms, and object-oriented design.',
-        'Explored machine learning, deep learning, computer vision, and natural language processing disciplines.',
-        'Hands-on experience with PyTorch, TensorFlow, Keras, scikit-learn, Pandas, and NumPy.',
-        'Applied modern software engineering practices, CI/CD, and agile development methodologies.',
+        'Advanced coursework in Machine Learning, Deep Neural Architectures, Computer Vision, and Natural Language Processing.',
+        'Strong algorithmic and mathematical foundations in data structures, algorithms, object-oriented software engineering, linear algebra, and probability theory.',
+        'Hands-on experience with PyTorch, TensorFlow, Keras, scikit-learn, Pandas, NumPy, and modern high-concurrency backends.',
+        'Applied modern software engineering practices: containerization with Docker, automated CI/CD pipelines, and Agile development methodologies.',
       ],
     },
   ],
   certifications: [
     {
-      title: 'Supervised Machine Learning: Regression and Classification',
-      issuer: 'DeepLearning.AI & Stanford Online / Coursera',
-      date: 'Jan 2026',
-      skills: ['Linear Regression', 'Logistic Regression', 'Gradient Descent', 'Cost Functions', 'Regularization'],
+      title: 'Agentic AI Systems Engineering Trainee',
+      issuer: 'National Telecommunication Institute (NTI)',
+      date: 'Apr 2026',
+      image: '/certificates/Agentic_AI_Program_at_NTI_Certificate_.png',
+      skills: ['LangGraph Multi-Agent', 'Autonomous Tool Calling', 'Self-RAG', 'Supervisor Orchestration', 'FastAPI', 'Evaluation Loops'],
+      description: 'Rigorous 288-hour technical program focused on production-grade agentic AI systems, multi-agent supervisors, dynamic state machines, and grounded RAG pipelines, where I engineered and shipped TaskTune AI.',
     },
     {
-      title: 'Advanced Learning Algorithms',
-      issuer: 'DeepLearning.AI & Stanford Online / Coursera',
-      date: 'Jan 2026',
-      skills: ['Neural Networks', 'Decision Trees', 'Random Forests', 'XGBoost', 'Multiclass Classification'],
+      title: 'AI Engineer Internship Certificate of Completion',
+      issuer: 'Fixed Solutions',
+      date: 'Jul 2026',
+      image: '/certificates/Certificate_of_completion_Fixed_Solution_Intern.png',
+      skills: ['Enterprise Hybrid RAG', 'Qdrant Vector DB', 'PostgreSQL BM25', 'Apache AGE Graph', 'FastAPI Monolith', 'Celery OCR'],
+      description: 'Recognized for architecting and deploying FixedRAG, an enterprise multi-user hybrid RAG platform combining dense vector search, lexical BM25 search, and knowledge graph traversal.',
     },
     {
-      title: 'Unsupervised Learning, Recommenders, Reinforcement Learning',
-      issuer: 'DeepLearning.AI & Stanford Online / Coursera',
-      date: 'Feb 2026',
-      skills: ['K-Means Clustering', 'PCA', 'Anomaly Detection', 'Collaborative Filtering', 'Deep Q-Learning'],
-    },
-    {
-      title: 'Huawei HCIA-AI Learning Course',
-      issuer: 'Huawei',
+      title: 'Huawei Certified ICT Associate - Artificial Intelligence (HCIA-AI)',
+      issuer: 'Huawei Technologies',
       date: 'Jul 2024',
-      skills: ['AI Overview', 'Python Programming', 'TensorFlow Basics', 'Deep Learning Frameworks', 'AI Deployment'],
+      image: '/certificates/Huawei_HCIA-AI_Certificate.png',
+      skills: ['Deep Learning Frameworks', 'TensorFlow Basics', 'Computer Vision', 'NLP Pipelines', 'AI Model Deployment'],
+      description: 'Industry certification validating mastery of artificial intelligence fundamentals, machine learning algorithms, deep learning neural network training, and Huawei Ascend AI computing platforms.',
+    },
+  ],
+  courses: [
+    {
+      title: 'Machine Learning Specialization (3-Course Series)',
+      platform: 'Coursera & DeepLearning.AI',
+      issuer: 'Andrew Ng (Stanford Online & DeepLearning.AI)',
+      date: 'Jan – Feb 2026',
+      badgeImage: '/certificates/cisco_data-science-essentials-with-python.png',
+      skills: ['Supervised Learning', 'Advanced Learning Algorithms', 'Neural Networks', 'XGBoost', 'Unsupervised Learning', 'Recommender Systems', 'Reinforcement Learning'],
+      description: 'Comprehensive specialization covering linear regression, logistic regression, neural network architectures, decision trees, random forests, clustering, PCA, anomaly detection, and deep Q-learning.',
+    },
+    {
+      title: 'Artificial Intelligence Fundamentals & Deep Learning',
+      platform: 'IBM SkillsBuild',
+      issuer: 'IBM Cloud Education',
+      date: '2024 – 2025',
+      badgeImage: '/certificates/ibm_Artificial_Intelligence_Fundamentals_-_IBM.png',
+      skills: ['AI Fundamentals', 'Deep Learning Architecture', 'Prompt Engineering', 'Everyday AI Ethics', 'IBM Cloud'],
+      description: 'Credentials covering foundational AI architectures, neural network training, practical prompting strategies, and enterprise ethics for trustworthy, unbiased AI deployment.',
+    },
+    {
+      title: 'Python Essentials 1 & 2, Data Science & Analytics',
+      platform: 'Cisco Networking Academy / Credly',
+      issuer: 'OpenEDG Python Institute & Cisco',
+      date: '2024',
+      badgeImage: '/certificates/cisco_python-essentials-2.png',
+      skills: ['Python 3 Advanced', 'Object-Oriented Programming', 'Data Science Essentials', 'Data Analytics', 'NumPy & Pandas'],
+      description: 'Dual certifications from the OpenEDG Python Institute and Cisco verifying mastery of Python data structures, OOP paradigms, modules, algorithmic optimization, and data analytics pipelines.',
     },
   ],
   experience: [
@@ -210,26 +254,36 @@ export const PROFILE: ProfileData = {
     {
       category: 'AI, LLMs & Retrieval',
       icon: 'Bot',
+      skillsCount: 12,
+      tagline: 'Multi-agent orchestration, hybrid vector/graph retrieval, and fine-tuning pipelines',
       skills: ['LangGraph Multi-Agent', 'LangChain', 'LlamaIndex', 'Hybrid RAG (Vector + BM25 + Graph)', 'GraphRAG & Knowledge Graphs', 'Self-RAG', 'Ragas & LLM Evaluation', 'Hugging Face PEFT / LoRA / QLoRA', 'PyTorch', 'Whisper Speech ASR', 'vLLM / Ollama', 'Groq API'],
     },
     {
       category: 'Cloud & MLOps',
       icon: 'Cloud',
+      skillsCount: 10,
+      tagline: 'Google Cloud Platform, Vertex AI, containerization, and monitoring',
       skills: ['Google Cloud Platform (GCP)', 'Vertex AI', 'Cloud Run', 'BigQuery', 'Cloud Storage (GCS)', 'Docker & Docker Compose', 'CI/CD Pipelines', 'MLflow', 'OpenTelemetry', 'Prometheus & Grafana'],
     },
     {
-      category: 'Backend & System Architecture',
+      category: 'Backend & Systems',
       icon: 'Server',
+      skillsCount: 10,
+      tagline: 'High-throughput APIs, asynchronous task workers, and identity security',
       skills: ['FastAPI', 'Python 3.12', 'ASP.NET Core 8 Web API', 'C#', 'Microservices & Monoliths', 'Celery Async Workers', 'Redis Caching & Queues', 'RESTful APIs', 'WebSockets & SSE', 'Keycloak (JWT / RBAC)'],
     },
     {
       category: 'Databases & Vector Stores',
       icon: 'Database',
+      skillsCount: 7,
+      tagline: 'Dense vector indexing, relational databases, and knowledge graph stores',
       skills: ['PostgreSQL 16', 'Qdrant Vector DB', 'Apache AGE (Graph)', 'SQL Server 2025', 'MySQL', 'BigQuery', 'Redis In-Memory'],
     },
     {
-      category: 'Frontend & UI',
+      category: 'Frontend & Tooling',
       icon: 'Layout',
+      skillsCount: 6,
+      tagline: 'Interactive web user interfaces, graph visualization, and developer tooling',
       skills: ['React 19', 'Next.js 14 App Router', 'TypeScript', 'Tailwind CSS', 'Cytoscape.js Graph Viz', 'HTML5 Web Audio / Video'],
     },
   ],

@@ -27,6 +27,7 @@ export default function Footer() {
             <a href="#experience" className="footer-link">Experience</a>
             <a href="#skills" className="footer-link">Skills & Methodology</a>
             <a href="#education" className="footer-link">Education</a>
+            <a href="#certifications" className="footer-link">Certifications</a>
             <a href="#contact" className="footer-link">Contact</a>
             <a href={PROFILE.cvPath} download="Kerollos_Mansour_CV.pdf" className="footer-link highlight">
               Download CV (PDF)

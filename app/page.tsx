@@ -7,6 +7,7 @@ import ProjectsSection from './components/ProjectsSection';
 import ExperienceSection from './components/ExperienceSection';
 import SkillsMatrix from './components/SkillsMatrix';
 import EducationSection from './components/EducationSection';
+import CertificationsSection from './components/CertificationsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import ProjectModal from './components/ProjectModal';
@@ -29,20 +30,23 @@ export default function MasterPortfolioPage() {
       <Navbar />
 
       <main className="portfolio-main-content">
-        {/* Minimalist Hero Section with Seamless Photo Cutout */}
+        {/* Minimalist Hero Section with Seamless Grounded Photo */}
         <HeroSection />
 
-        {/* Unified Projects Section (Showcase & Catalog) */}
+        {/* All Projects (13) Interactive Slider */}
         <ProjectsSection onOpenModal={handleOpenModal} />
 
         {/* Professional Career Experience Timeline */}
         <ExperienceSection />
 
-        {/* Engineering Methodology & Technical Skills Matrix */}
+        {/* Engineering Methodology & Rectangle-Tabbed Technical Skills */}
         <SkillsMatrix />
 
-        {/* Education & Industry Certifications */}
+        {/* Standalone Higher Education Section */}
         <EducationSection />
+
+        {/* Standalone Industry Certifications & Specialized Courses */}
+        <CertificationsSection />
 
         {/* Direct Contact & Resume Hub */}
         <ContactSection />

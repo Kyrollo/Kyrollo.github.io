@@ -10,13 +10,12 @@ import {
   Video, 
   Image as ImageIcon, 
   Maximize2, 
-  ExternalLink,
   Sparkles,
-  Search,
   ArrowUpRight,
   Code2,
   Layers,
-  Activity
+  Activity,
+  CheckCircle2
 } from 'lucide-react';
 import { ProjectData, PROJECTS_DATA } from '../data/projectsData';
 import Lightbox from './Lightbox';
@@ -27,7 +26,6 @@ interface ProjectsSectionProps {
 
 export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [activeMediaTab, setActiveMediaTab] = useState<'video' | 'screenshots' | 'architecture' | 'tech'>('video');
   const [activeScreenshotIdx, setActiveScreenshotIdx] = useState<number>(0);
@@ -35,6 +33,7 @@ export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
   const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
 
   const showcaseRef = useRef<HTMLDivElement>(null);
+  const thumbsTrackRef = useRef<HTMLDivElement>(null);
 
   const categories = [
     'All',
@@ -45,65 +44,44 @@ export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
     'Multimodal & Vision',
   ];
 
-  // Projects filtered by category
-  const categoryFiltered = selectedCategory === 'All'
+  // Filter projects by category
+  const filteredProjects = selectedCategory === 'All'
     ? PROJECTS_DATA
     : PROJECTS_DATA.filter((p) => p.category === selectedCategory);
 
-  // Search filtered projects
-  const searchFiltered = categoryFiltered.filter((p) => {
-    if (!searchQuery.trim()) return true;
-    const q = searchQuery.toLowerCase();
-    return (
-      p.name.toLowerCase().includes(q) ||
-      p.subtitle.toLowerCase().includes(q) ||
-      p.summary.toLowerCase().includes(q) ||
-      Object.values(p.technologies).some((arr) => 
-        arr.some((t) => t.toLowerCase().includes(q))
-      )
-    );
-  });
-
-  // Current project for the showcase
-  const currentProject = categoryFiltered[currentIndex] || PROJECTS_DATA[0];
+  // Active project
+  const currentProject = filteredProjects[currentIndex] || PROJECTS_DATA[0];
 
   useEffect(() => {
     setCurrentIndex(0);
     setActiveScreenshotIdx(0);
   }, [selectedCategory]);
 
-  // Auto-play timer for showcase
+  // Auto-advance timer
   useEffect(() => {
     if (!isPlaying) return;
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % categoryFiltered.length);
+      setCurrentIndex((prev) => (prev + 1) % filteredProjects.length);
       setActiveScreenshotIdx(0);
-    }, 10000);
+    }, 9000);
     return () => clearInterval(interval);
-  }, [isPlaying, categoryFiltered.length]);
+  }, [isPlaying, filteredProjects.length]);
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + categoryFiltered.length) % categoryFiltered.length);
+    setCurrentIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length);
     setActiveScreenshotIdx(0);
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % categoryFiltered.length);
+    setCurrentIndex((prev) => (prev + 1) % filteredProjects.length);
     setActiveScreenshotIdx(0);
   };
 
-  const handleSelectFromGrid = (proj: ProjectData) => {
-    const idx = categoryFiltered.findIndex((p) => p.id === proj.id);
-    if (idx !== -1) {
-      setCurrentIndex(idx);
-    } else {
-      setSelectedCategory('All');
-      const allIdx = PROJECTS_DATA.findIndex((p) => p.id === proj.id);
-      setCurrentIndex(allIdx !== -1 ? allIdx : 0);
-    }
+  const handleSelectThumb = (idx: number) => {
+    setCurrentIndex(idx);
     setActiveScreenshotIdx(0);
     if (showcaseRef.current) {
-      showcaseRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      showcaseRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   };
 
@@ -111,12 +89,12 @@ export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
     <section id="projects" className="projects-unified-section">
       {/* Section Header */}
       <div className="section-header-center">
-        <span className="section-pill">Portfolio Showcase</span>
+        <span className="section-pill">Interactive Project Slider</span>
         <h2 className="section-title">
-          Featured <span className="text-gradient-cyan">Projects</span>
+          All <span className="text-gradient-cyan">Projects (13)</span>
         </h2>
         <p className="section-subtitle">
-          Production AI systems spanning Enterprise Hybrid RAG, Multi-Agent Orchestration, LLM Guardrails, and Distributed Inference.
+          Explore all 13 production machine learning platforms, multi-agent systems, and enterprise RAG engines.
         </p>
       </div>
 
@@ -133,17 +111,17 @@ export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
         ))}
       </div>
 
-      {/* Active Interactive Showcase */}
+      {/* Main Interactive Project Slider Card */}
       <div ref={showcaseRef} className="slider-showcase-card">
-        {/* Showcase Header */}
+        {/* Slider Card Header */}
         <div className="slider-card-header">
           <div className="header-meta-left">
             <span
               className="tier-badge"
               style={{
-                borderColor: currentProject.tier === 'Flagship' ? 'rgba(6, 182, 212, 0.4)' : 'rgba(139, 92, 246, 0.4)',
+                borderColor: currentProject.tier === 'Flagship' ? 'rgba(14, 165, 233, 0.4)' : 'rgba(139, 92, 246, 0.4)',
                 color: currentProject.tier === 'Flagship' ? 'var(--cyan-400)' : 'var(--violet-400)',
-                background: currentProject.tier === 'Flagship' ? 'rgba(6, 182, 212, 0.12)' : 'rgba(139, 92, 246, 0.12)',
+                background: currentProject.tier === 'Flagship' ? 'rgba(14, 165, 233, 0.12)' : 'rgba(139, 92, 246, 0.12)',
               }}
             >
               {currentProject.tier.toUpperCase()} • {currentProject.category}
@@ -156,16 +134,16 @@ export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
             <button
               className={`slider-autoplay-btn ${isPlaying ? 'playing' : ''}`}
               onClick={() => setIsPlaying(!isPlaying)}
-              title={isPlaying ? 'Pause Auto-Play' : 'Start Auto-Play'}
+              title={isPlaying ? 'Pause Auto-Advance' : 'Start Auto-Advance'}
             >
               {isPlaying ? <Pause size={15} /> : <Play size={15} />}
-              <span>{isPlaying ? 'Auto' : 'Auto-Play'}</span>
+              <span>{isPlaying ? 'Auto-Advancing' : 'Auto-Play'}</span>
             </button>
 
             <div className="slider-counter">
               <span className="current-num">{String(currentIndex + 1).padStart(2, '0')}</span>
               <span className="sep">/</span>
-              <span className="total-num">{String(categoryFiltered.length).padStart(2, '0')}</span>
+              <span className="total-num">{String(filteredProjects.length).padStart(2, '0')}</span>
             </div>
 
             <div className="slider-nav-arrows">
@@ -179,9 +157,9 @@ export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
           </div>
         </div>
 
-        {/* Showcase Body: Media + Information */}
+        {/* Slider Card Body */}
         <div className="slider-card-body">
-          {/* Left Media Stage */}
+          {/* Media Stage */}
           <div className="slider-media-stage">
             <div className="media-tabs-bar">
               <button
@@ -214,7 +192,6 @@ export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
               </button>
             </div>
 
-            {/* Media Content Display */}
             <div className="media-display-container">
               {activeMediaTab === 'video' && (
                 <div className="video-player-wrap">
@@ -297,7 +274,7 @@ export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
               {activeMediaTab === 'tech' && (
                 <div className="tech-stack-viewer-wrap">
                   <div className="tech-category-group">
-                    <span className="tech-cat-label">AI / Machine Learning</span>
+                    <span className="tech-cat-label">AI & Machine Learning</span>
                     <div className="tech-pill-row">
                       {currentProject.technologies.ai_ml.map((t) => (
                         <span key={t} className="tech-tag-pill cyan">{t}</span>
@@ -305,7 +282,7 @@ export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
                     </div>
                   </div>
                   <div className="tech-category-group">
-                    <span className="tech-cat-label">Backend & Services</span>
+                    <span className="tech-cat-label">Backend & Cloud Architecture</span>
                     <div className="tech-pill-row">
                       {currentProject.technologies.backend.map((t) => (
                         <span key={t} className="tech-tag-pill emerald">{t}</span>
@@ -313,7 +290,7 @@ export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
                     </div>
                   </div>
                   <div className="tech-category-group">
-                    <span className="tech-cat-label">Storage & Retrieval</span>
+                    <span className="tech-cat-label">Databases & Storage</span>
                     <div className="tech-pill-row">
                       {currentProject.technologies.data_storage.map((t) => (
                         <span key={t} className="tech-tag-pill violet">{t}</span>
@@ -328,7 +305,7 @@ export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
           {/* Right Information Panel */}
           <div className="slider-info-panel">
             <div className="info-summary-block">
-              <h4 className="info-panel-title">Overview & Problem Statement</h4>
+              <h4 className="info-panel-title">Overview & Architecture</h4>
               <p className="info-summary-text">{currentProject.summary}</p>
             </div>
 
@@ -366,118 +343,35 @@ export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Catalog Search & Projects Grid */}
-      <div className="catalog-search-header">
-        <h3 className="catalog-subtitle">All Projects ({categoryFiltered.length})</h3>
-        <div className="search-input-wrapper">
-          <Search size={18} className="search-icon" />
-          <input
-            type="text"
-            placeholder="Search projects by technology or title..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="search-input"
-          />
-          {searchQuery && (
-            <button className="search-clear-btn" onClick={() => setSearchQuery('')}>
-              ×
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* Grid of Projects */}
-      <div className="projects-cards-grid">
-        {searchFiltered.map((proj) => (
-          <div key={proj.id} className="project-catalog-card">
-            <div className="card-media-preview" onClick={() => handleSelectFromGrid(proj)}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={proj.screenshots[0]?.src}
-                alt={proj.name}
-                className="card-preview-img"
-              />
-              <div className="preview-overlay">
-                <span className="preview-label">View in Showcase</span>
-              </div>
-              <span
-                className="card-tier-chip"
-                style={{
-                  background: proj.tier === 'Flagship' ? 'rgba(6, 182, 212, 0.9)' : 'rgba(139, 92, 246, 0.9)',
-                }}
-              >
-                {proj.tier.toUpperCase()}
-              </span>
-            </div>
-
-            <div className="card-content-body">
-              <div className="card-category-row">
-                <span className="card-category-text">{proj.category}</span>
-                <span className="card-screenshots-count">
-                  {proj.screenshots.length} Screenshots
-                </span>
-              </div>
-
-              <h3 className="card-project-title" onClick={() => handleSelectFromGrid(proj)}>
-                {proj.name}
-              </h3>
-              <p className="card-project-subtitle">{proj.subtitle}</p>
-              <p className="card-project-desc">{proj.summary}</p>
-
-              <div className="card-metrics-row">
-                {Object.entries(proj.metrics).slice(0, 3).map(([mk, mv]) => (
-                  <div key={mk} className="card-metric-pill">
-                    <span className="metric-k">{mk}:</span>
-                    <span className="metric-v">{mv}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="card-tech-chips">
-                {[...proj.technologies.ai_ml.slice(0, 2), ...proj.technologies.backend.slice(0, 2)].map((tech) => (
-                  <span key={tech} className="tech-chip-small">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="card-footer-actions">
-              <button
-                className="btn-card-study"
-                onClick={() => onOpenModal(proj)}
-              >
-                <span>Architecture & Case Study</span>
-                <ArrowUpRight size={15} />
-              </button>
-
-              <a
-                href={proj.repo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-card-github"
-                title="Open Source Code in GitHub"
-              >
-                <Github size={17} />
-              </a>
-            </div>
+        {/* Project Thumbnail Navigation Track */}
+        <div className="slider-thumbnails-track-wrap">
+          <div className="track-header">
+            <span className="track-title">Select from Project Track ({filteredProjects.length})</span>
+            <span className="track-hint">Click any platform to slide directly</span>
           </div>
-        ))}
-      </div>
 
-      {searchFiltered.length === 0 && (
-        <div className="no-results-box">
-          <p>No projects match &quot;{searchQuery}&quot;.</p>
-          <button
-            className="btn-clear-filter"
-            onClick={() => setSearchQuery('')}
-          >
-            Reset Search
-          </button>
+          <div ref={thumbsTrackRef} className="slider-thumbnails-track">
+            {filteredProjects.map((p, idx) => (
+              <button
+                key={p.id}
+                className={`thumb-card-btn ${idx === currentIndex ? 'active' : ''}`}
+                onClick={() => handleSelectThumb(idx)}
+              >
+                <div className="thumb-card-media">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={p.screenshots[0]?.src} alt={p.name} className="thumb-card-img" />
+                  <span className="thumb-card-index">{String(idx + 1).padStart(2, '0')}</span>
+                </div>
+                <div className="thumb-card-info">
+                  <span className="thumb-card-name">{p.name}</span>
+                  <span className="thumb-card-cat">{p.category}</span>
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
-      )}
+      </div>
 
       {/* Lightbox Modal */}
       {isLightboxOpen && (

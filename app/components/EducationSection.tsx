@@ -1,89 +1,61 @@
 'use client';
 
 import React from 'react';
-import { GraduationCap, Award, Calendar, CheckCircle2, BookOpen } from 'lucide-react';
+import { GraduationCap, Calendar, MapPin, Award, BookOpen, CheckCircle2 } from 'lucide-react';
 import { PROFILE } from '../data/profileData';
 
 export default function EducationSection() {
+  const edu = PROFILE.education[0];
+
   return (
-    <section id="education" className="education-section">
+    <section id="education" className="education-section-standalone">
       <div className="section-header-center">
-        <span className="section-pill">Academic Credentials</span>
+        <span className="section-pill">Academic Degree</span>
         <h2 className="section-title">
-          Education & <span className="text-gradient-cyan">Certifications</span>
+          Higher <span className="text-gradient-cyan">Education</span>
         </h2>
         <p className="section-subtitle">
-          Rigorous academic foundations in Computer Science & Artificial Intelligence coupled with advanced industry certifications.
+          Formal academic training in computer science, machine learning theory, and algorithmic problem solving.
         </p>
       </div>
 
-      <div className="education-grid">
-        {/* Academic Degree Card */}
-        <div className="degree-showcase-column">
-          <h3 className="column-heading">
-            <GraduationCap size={22} className="text-cyan" />
-            <span>Academic Degree</span>
-          </h3>
-
-          {PROFILE.education.map((edu, idx) => (
-            <div key={idx} className="degree-card">
-              <div className="degree-badge-row">
-                <span className="degree-period">
-                  <Calendar size={13} />
-                  {edu.period}
-                </span>
-                <span className="degree-specialization">{edu.specialization}</span>
-              </div>
-
-              <h4 className="degree-title">{edu.degree}</h4>
-              <div className="degree-institution">{edu.institution}</div>
-
-              <p className="degree-desc">{edu.description}</p>
-
-              <div className="degree-highlights">
-                <h5 className="highlights-title">Curriculum & Technical Foundations:</h5>
-                <ul className="highlights-list">
-                  {edu.highlights.map((h, hIdx) => (
-                    <li key={hIdx} className="highlight-item">
-                      <CheckCircle2 size={15} className="text-cyan" />
-                      <span>{h}</span>
-                    </li>
-                  ))}
-                </ul>
+      <div className="education-standalone-card">
+        {/* University Header Row */}
+        <div className="edu-card-top-row">
+          <div className="edu-institution-info">
+            <div className="edu-cap-icon-box">
+              <GraduationCap size={28} className="text-cyan" />
+            </div>
+            <div>
+              <h3 className="edu-degree-title">{edu.degree}</h3>
+              <div className="edu-institution-meta">
+                <span className="edu-institution-name">{edu.institution}</span>
+                <span className="edu-bullet">•</span>
+                <span className="edu-specialization">Specialization: {edu.specialization}</span>
               </div>
             </div>
-          ))}
+          </div>
+
+          <div className="edu-timing-badge">
+            <Calendar size={14} />
+            <span>{edu.period}</span>
+          </div>
         </div>
 
-        {/* Certifications Column */}
-        <div className="certifications-column">
-          <h3 className="column-heading">
-            <Award size={22} className="text-violet" />
-            <span>Industry Certifications</span>
-          </h3>
+        {/* Academic Description */}
+        <p className="edu-description-text">{edu.description}</p>
 
-          <div className="certs-list">
-            {PROFILE.certifications.map((cert, cIdx) => (
-              <div key={cIdx} className="cert-card">
-                <div className="cert-top-row">
-                  <div className="cert-icon-box">
-                    <Award size={18} className="text-violet" />
-                  </div>
-                  <div className="cert-meta">
-                    <span className="cert-date">{cert.date}</span>
-                    <span className="cert-issuer">{cert.issuer}</span>
-                  </div>
-                </div>
-
-                <h4 className="cert-title">{cert.title}</h4>
-
-                <div className="cert-skills-wrap">
-                  {cert.skills.map((s) => (
-                    <span key={s} className="cert-skill-tag">
-                      {s}
-                    </span>
-                  ))}
-                </div>
+        {/* Core Academic Foundations & Coursework */}
+        <div className="edu-highlights-block">
+          <h4 className="highlights-title">
+            <BookOpen size={17} className="text-cyan" />
+            <span>Core Academic & Algorithmic Foundations:</span>
+          </h4>
+          <div className="highlights-grid">
+            {edu.highlights.map((highlight, idx) => (
+              <div key={idx} className="highlight-item-card">
+                <CheckCircle2 size={16} className="text-emerald highlight-check" />
+                <span className="highlight-text">{highlight}</span>
               </div>
             ))}
           </div>

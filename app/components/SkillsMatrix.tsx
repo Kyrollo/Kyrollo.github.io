@@ -11,29 +11,27 @@ import {
   Sparkles,
   Layers,
   Cpu,
-  GitBranch,
-  ShieldCheck,
-  Compass
+  ArrowRight
 } from 'lucide-react';
 import { PROFILE } from '../data/profileData';
 
 export default function SkillsMatrix() {
-  const [activeCategory, setActiveCategory] = useState<string>('All');
+  const [activeTabIdx, setActiveTabIdx] = useState<number>(0);
 
-  const getIcon = (iconName: string) => {
+  const getCategoryIcon = (iconName: string) => {
     switch (iconName) {
       case 'Bot':
-        return <Bot size={20} className="text-cyan" />;
+        return <Bot size={22} className="text-cyan" />;
       case 'Cloud':
-        return <Cloud size={20} className="text-cyan" />;
+        return <Cloud size={22} className="text-cyan" />;
       case 'Server':
-        return <Server size={20} className="text-emerald" />;
+        return <Server size={22} className="text-emerald" />;
       case 'Database':
-        return <Database size={20} className="text-violet" />;
+        return <Database size={22} className="text-violet" />;
       case 'Layout':
-        return <Layout size={20} className="text-amber" />;
+        return <Layout size={22} className="text-amber" />;
       default:
-        return <Sparkles size={20} className="text-cyan" />;
+        return <Sparkles size={22} className="text-cyan" />;
     }
   };
 
@@ -52,9 +50,7 @@ export default function SkillsMatrix() {
     }
   };
 
-  const filteredCategories = activeCategory === 'All'
-    ? PROFILE.skillCategories
-    : PROFILE.skillCategories.filter((c) => c.category === activeCategory);
+  const activeCategory = PROFILE.skillCategories[activeTabIdx] || PROFILE.skillCategories[0];
 
   return (
     <section id="skills" className="skills-matrix-section">
@@ -69,7 +65,7 @@ export default function SkillsMatrix() {
         </p>
       </div>
 
-      {/* Engineering Methodology Pillars (Merged from Architecture section) */}
+      {/* Engineering Methodology Pillars */}
       <div className="methodology-pillars-grid">
         {PROFILE.methodology.pillars.map((pillar, idx) => (
           <div key={pillar.title} className="methodology-card">
@@ -83,48 +79,76 @@ export default function SkillsMatrix() {
         ))}
       </div>
 
-      {/* Domain Category Filter Tabs */}
-      <div className="skills-header-divider">
-        <h3 className="skills-subtitle">Core Technical Competencies</h3>
-      </div>
+      {/* Core Technical Competencies Section */}
+      <div className="skills-competencies-wrap">
+        <div className="skills-header-divider">
+          <span className="section-pill">Domain Architecture</span>
+          <h3 className="skills-subtitle">Core Technical Competencies</h3>
+          <p className="skills-subdesc">
+            Select a specialized technical domain below to explore verified tools, frameworks, and production stacks.
+          </p>
+        </div>
 
-      <div className="skills-filter-tabs">
-        <button
-          className={`skills-tab-btn ${activeCategory === 'All' ? 'active' : ''}`}
-          onClick={() => setActiveCategory('All')}
-        >
-          All Domains
-        </button>
-        {PROFILE.skillCategories.map((c) => (
-          <button
-            key={c.category}
-            className={`skills-tab-btn ${activeCategory === c.category ? 'active' : ''}`}
-            onClick={() => setActiveCategory(c.category)}
-          >
-            {c.category}
-          </button>
-        ))}
-      </div>
-
-      {/* Grid of Skill Categories */}
-      <div className="skills-cards-grid">
-        {filteredCategories.map((cat) => (
-          <div key={cat.category} className="skill-category-card">
-            <div className="category-card-header">
-              <div className="category-icon-wrapper">{getIcon(cat.icon)}</div>
-              <h3 className="category-title">{cat.category}</h3>
-            </div>
-
-            <div className="skills-badges-wrap">
-              {cat.skills.map((skill) => (
-                <div key={skill} className="skill-badge-item">
-                  <CheckCircle2 size={14} className="badge-check" />
-                  <span>{skill}</span>
+        {/* 5 Distinct Rectangle Category Cards / Tabs */}
+        <div className="skills-rectangle-tabs-grid">
+          {PROFILE.skillCategories.map((cat, idx) => {
+            const isActive = idx === activeTabIdx;
+            return (
+              <button
+                key={cat.category}
+                className={`skill-rectangle-tab-btn ${isActive ? 'active' : ''}`}
+                onClick={() => setActiveTabIdx(idx)}
+                type="button"
+              >
+                <div className="rect-tab-left">
+                  <div className="rect-tab-icon-box">
+                    {getCategoryIcon(cat.icon)}
+                  </div>
+                  <div className="rect-tab-text">
+                    <h4 className="rect-tab-title">{cat.category}</h4>
+                    <span className="rect-tab-count">{cat.skillsCount} Technologies</span>
+                  </div>
                 </div>
-              ))}
+                <div className="rect-tab-indicator">
+                  <span className="indicator-dot" />
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Display Box Showing ONLY the Skills of the Single Active Tab */}
+        <div className="active-tab-skills-display-card">
+          <div className="active-display-header">
+            <div className="active-header-left">
+              <div className="active-icon-frame">
+                {getCategoryIcon(activeCategory.icon)}
+              </div>
+              <div>
+                <span className="active-label">Active Technical Domain</span>
+                <h3 className="active-category-name">{activeCategory.category}</h3>
+                <p className="active-tagline">{activeCategory.tagline}</p>
+              </div>
+            </div>
+            <div className="active-header-badge">
+              <span className="verified-badge-pill">
+                <CheckCircle2 size={14} className="text-emerald" />
+                <span>{activeCategory.skills.length} Production Skills</span>
+              </span>
             </div>
           </div>
-        ))}
+
+          <div className="active-skills-badges-grid">
+            {activeCategory.skills.map((skill) => (
+              <div key={skill} className="single-skill-card">
+                <div className="skill-check-circle">
+                  <CheckCircle2 size={16} className="skill-check-icon text-cyan" />
+                </div>
+                <span className="skill-text">{skill}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
