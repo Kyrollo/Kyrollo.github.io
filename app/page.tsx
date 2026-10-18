@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import ProjectsSection from './components/ProjectsSection';
+import AboutSection from './components/AboutSection';
 import ExperienceSection from './components/ExperienceSection';
-import SkillsMatrix from './components/SkillsMatrix';
-import EducationSection from './components/EducationSection';
-import CertificationsSection from './components/CertificationsSection';
+import EngineeringSection from './components/EngineeringSection';
+import CredentialsSection from './components/CredentialsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import ProjectModal from './components/ProjectModal';
@@ -25,37 +25,37 @@ export default function MasterPortfolioPage() {
   };
 
   return (
-    <div className="portfolio-app-root">
-      {/* Minimalist Top Navbar */}
+    <div className="min-h-screen bg-[#070A12] text-[#E8ECF3] relative selection:bg-[#5EEAD4] selection:text-[#070A12]">
+      {/* Top Navbar with Scroll Progress Bar & Active Link Tracking */}
       <Navbar />
 
-      <main className="portfolio-main-content">
-        {/* Minimalist Hero Section with Seamless Grounded Photo */}
+      <main>
+        {/* 01 Hero Section */}
         <HeroSection />
 
-        {/* All Projects (13) Interactive Slider */}
+        {/* 02 Featured Work (FixedRAG & TaskTune pinned) */}
         <ProjectsSection onOpenModal={handleOpenModal} />
 
-        {/* Professional Career Experience Timeline */}
+        {/* 03 About Me & GitHub Activity */}
+        <AboutSection />
+
+        {/* 04 Professional Work Experience */}
         <ExperienceSection />
 
-        {/* Engineering Methodology & Rectangle-Tabbed Technical Skills */}
-        <SkillsMatrix />
+        {/* 05 Engineering Methodology & Stack (Merged System Architecture & Tools) */}
+        <EngineeringSection />
 
-        {/* Standalone Higher Education Section */}
-        <EducationSection />
+        {/* 06 Academic Foundations & Verified Credentials */}
+        <CredentialsSection />
 
-        {/* Standalone Industry Certifications & Specialized Courses */}
-        <CertificationsSection />
-
-        {/* Direct Contact & Resume Hub */}
+        {/* 07 Working Contact Form (Web3Forms) */}
         <ContactSection />
       </main>
 
-      {/* Global Minimalist Footer */}
+      {/* Modern Footer */}
       <Footer />
 
-      {/* Deep-Dive Case Study Modal */}
+      {/* Case Study Modal */}
       <ProjectModal
         project={selectedModalProject}
         onClose={handleCloseModal}

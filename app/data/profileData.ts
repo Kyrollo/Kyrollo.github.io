@@ -67,6 +67,8 @@ export interface ProfileData {
   stats: {
     projectsCount: number;
     experienceYears: string;
+    toolsCount: string;
+    agentSystems: string;
   };
   methodology: {
     title: string;
@@ -84,10 +86,10 @@ export const PROFILE: ProfileData = {
   name: 'Kerollos Mansour',
   monogram: 'KM.',
   avatar: '/kero.jpeg',
-  heroPhoto: '/kero_hero_v2.png',
-  title: 'ML & AI Engineer',
-  tagline: 'Building production-ready machine learning and LLM systems',
-  bio: 'AI Engineer building production-ready machine learning and LLM systems, with hands-on experience in model training and evaluation, dataset preprocessing, RAG pipelines with vector databases, secure API integrations, and scalable FastAPI backends. I focus on improving model performance and turning AI workflows into reliable deployed services.',
+  heroPhoto: '/kero_photo_cutout.png',
+  title: 'Software AI Engineer · Agentic AI Engineer',
+  tagline: 'Engineering agentic AI systems that ship to production',
+  bio: 'I engineer production AI systems — from multi-agent orchestration and hybrid RAG pipelines to fine-tuned LLMs and autonomous agent workflows. Passionate about turning cutting-edge AI research into reliable, production-tested software.',
   email: 'kirolsmansour@gmail.com',
   phone: '+20 128 435 5306',
   location: 'Cairo, Egypt',
@@ -98,6 +100,8 @@ export const PROFILE: ProfileData = {
   stats: {
     projectsCount: 13,
     experienceYears: '2+ Years',
+    toolsCount: '40+ Tools',
+    agentSystems: '5 Agent systems',
   },
   methodology: {
     title: 'Engineering Methodology & Approach',
@@ -120,7 +124,7 @@ export const PROFILE: ProfileData = {
       },
       {
         title: 'Cloud & Modern MLOps Excellence',
-        description: 'Deploying scalable services across GCP (Vertex AI, Cloud Run) and local GPU clusters with Docker, Redis caching, async Celery workers, and automated CI/CD workflows.',
+        description: 'Deploying scalable services across GCP (Vertex AI, Cloud Run) and distributed cloud environments with Docker, Redis caching, async Celery workers, and automated CI/CD workflows.',
         tag: 'GCP & Containerization',
       },
     ],
