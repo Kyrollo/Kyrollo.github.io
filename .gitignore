@@ -6,24 +6,54 @@
 # testing
 /coverage
 
-# next.js
+# next.js build outputs
 /.next/
 /out/
+/dist/
 
 # production
 /build
 
-# misc
+# Python scripts & virtual environments
+/scripts/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+ENV/
+
+# temporary and scratch folders
+/scratch/
+/temp/
+/.temp/
+*.tmp
+
+# misc & OS
 .DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
 *.pem
 
-# debug
+# debug & package manager logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+*.log
 
 # local env files
+.env
+.env.local
 .env*.local
+
+# editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
 
 # vercel
 .vercel

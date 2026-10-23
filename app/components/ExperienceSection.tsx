@@ -49,10 +49,19 @@ export default function ExperienceSection() {
       >
         {PROFILE.experience.map((exp, idx) => (
           <motion.div key={idx} variants={itemVariants} className="timeline-item">
-            {/* Timeline Marker with Pulsing Glow Ring */}
+            {/* Timeline Marker with Pulsing Glow Ring & Clear, Enlarged Company Logo */}
             <div className="timeline-marker">
-              <div className="marker-dot pulse-marker">
-                <Briefcase size={16} className="text-cyan-400" />
+              <div className="marker-dot pulse-marker !bg-white shadow-xl shadow-cyan-950/40 border-2 border-[#5EEAD4] p-2 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:scale-110">
+                {exp.logo ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img 
+                    src={exp.logo} 
+                    alt={exp.company} 
+                    className="w-full h-full object-contain filter-none" 
+                  />
+                ) : (
+                  <Briefcase size={22} className="text-slate-800" />
+                )}
               </div>
               {idx < PROFILE.experience.length - 1 && (
                 <div className="marker-line-animated" />

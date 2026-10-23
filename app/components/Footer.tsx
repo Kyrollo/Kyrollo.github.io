@@ -3,6 +3,7 @@
 import React from 'react';
 import { Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
 import { PROFILE } from '../data/profileData';
+import { SentientSparkLogo } from './SentientSparkLogo';
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -20,40 +21,8 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-800/80">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-[#0E121B] border border-slate-800 flex items-center justify-center p-1.5 text-white">
-              <svg viewBox="0 0 64 64" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                {/* Left Stem (K, M, and I) */}
-                <path d="M16 16 V48" stroke="url(#foot-kmai-grad)" strokeWidth="4" strokeLinecap="round" />
-                <circle cx="16" cy="16" r="2.5" fill="#5EEAD4" />
-                <circle cx="16" cy="48" r="2.5" fill="#818CF8" />
-
-                {/* M Valley & K Upper arm */}
-                <path d="M16 16 L27 32 L38 16" stroke="url(#foot-kmai-grad)" strokeWidth="3.8" strokeLinecap="round" strokeLinejoin="round" />
-                <circle cx="38" cy="16" r="2.5" fill="#5EEAD4" />
-
-                {/* A Crossbar */}
-                <path d="M21 24.5 H33" stroke="#5EEAD4" strokeWidth="2.5" strokeLinecap="round" />
-
-                {/* K Lower leg */}
-                <path d="M27 32 L38 48" stroke="url(#foot-kmai-grad)" strokeWidth="3.8" strokeLinecap="round" strokeLinejoin="round" />
-                <circle cx="38" cy="48" r="2.5" fill="#818CF8" />
-
-                {/* M Right wing & I pillar */}
-                <path d="M38 16 L48 30 V48" stroke="url(#foot-kmai-grad)" strokeWidth="3.8" strokeLinecap="round" strokeLinejoin="round" />
-                <circle cx="48" cy="16" r="3" fill="#818CF8" />
-                <circle cx="48" cy="48" r="2.5" fill="#818CF8" />
-
-                {/* Central AI Neural Core */}
-                <circle cx="27" cy="32" r="4.2" fill="#0E121B" stroke="#5EEAD4" strokeWidth="2.2" />
-                <circle cx="27" cy="32" r="2" fill="#5EEAD4" />
-
-                <defs>
-                  <linearGradient id="foot-kmai-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#5EEAD4" />
-                    <stop offset="100%" stopColor="#818CF8" />
-                  </linearGradient>
-                </defs>
-              </svg>
+            <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white shadow-sm">
+              <SentientSparkLogo className="w-full h-full" size={32} />
             </div>
             <div>
               <h4 className="text-sm font-bold text-white font-['Space_Grotesk']">

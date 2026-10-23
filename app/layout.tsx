@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   title: 'Kerollos Mansour — Software AI Engineer & Agentic AI Engineer',
   description: 'Kerollos Mansour builds agentic AI systems: multi-agent workflows, hybrid RAG and fine-tuned LLMs, shipped with tests and CI.',
   icons: {
-    icon: '/icon.svg',
+    icon: '/icon.svg?v=spark',
   },
   keywords: [
     'Software AI Engineer',

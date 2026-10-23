@@ -1,52 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
   <defs>
-    <linearGradient id="kmai-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#5EEAD4" />
-      <stop offset="100%" stop-color="#818CF8" />
+    <linearGradient id="spark-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="64" y2="64">
+      <stop offset="0%" stop-color="#5EEAD4"/>
+      <stop offset="50%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#818CF8"/>
     </linearGradient>
-    <filter id="kmai-glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="1.5" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    <filter id="glow-spark" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
     </filter>
   </defs>
 
-  <!-- Dark Rounded Container -->
-  <rect x="2" y="2" width="60" height="60" rx="16" fill="#070A12" stroke="url(#kmai-grad)" stroke-width="1.8" />
+  <!-- Dark Obsidian Cyber Shield Frame -->
+  <rect x="3" y="3" width="58" height="58" rx="15" fill="#070A12" stroke="url(#spark-grad)" stroke-width="2"/>
+
+  <!-- ==================== KM SENTIENT SPARK MONOGRAM ==================== -->
+  <!-- K Vertical Spine -->
+  <line x1="16" y1="16" x2="16" y2="48" stroke="url(#spark-grad)" stroke-width="4.8" stroke-linecap="round"/>
   
-  <!-- Subtle Internal Circuit Lines -->
-  <path d="M10 32 H14 M50 32 H54 M32 10 V14 M32 50 V54" stroke="url(#kmai-grad)" stroke-width="1" opacity="0.4" stroke-linecap="round" />
-
-  <!-- === The K + M + AI Integrated Geometry === -->
-
-  <!-- 1. LEFT STEM (Forms left of K, left of M, and vertical reference) -->
-  <path d="M16 16 V48" stroke="url(#kmai-grad)" stroke-width="3.6" stroke-linecap="round" />
-  <circle cx="16" cy="16" r="2.2" fill="#5EEAD4" />
-  <circle cx="16" cy="48" r="2.2" fill="#818CF8" />
-
-  <!-- 2. THE 'M' VALLEY & 'K' UPPER ARM (with crossbar forming 'A') -->
-  <!-- Left-to-Center slant -->
-  <path d="M16 16 L27 32" stroke="url(#kmai-grad)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- K Upper Arm connecting to M Peak -->
+  <line x1="16" y1="32" x2="27" y2="18" stroke="url(#spark-grad)" stroke-width="4.2" stroke-linecap="round"/>
   
-  <!-- Center-to-Right peak slant (completes M valley & K upper branch) -->
-  <path d="M27 32 L38 16" stroke="url(#kmai-grad)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
-  <circle cx="38" cy="16" r="2.2" fill="#5EEAD4" />
+  <!-- K Lower Leg -->
+  <line x1="16" y1="32" x2="27" y2="48" stroke="url(#spark-grad)" stroke-width="4.2" stroke-linecap="round"/>
 
-  <!-- Horizontal crossbar across the upper wedge to form the 'A' of AI -->
-  <path d="M21 24.5 H33" stroke="#5EEAD4" stroke-width="2.2" stroke-linecap="round" />
-
-  <!-- 3. 'K' LOWER LEG -->
-  <path d="M27 32 L38 48" stroke="url(#kmai-grad)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
-  <circle cx="38" cy="48" r="2.2" fill="#818CF8" />
-
-  <!-- 4. RIGHT STEM (Completes 'M' right wing, and forms the 'I' in AI) -->
-  <!-- Right peak down to base -->
-  <path d="M38 16 L48 30 V48" stroke="url(#kmai-grad)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- M Central V-Slants -->
+  <path d="M27 18 L38 32 L48 18" stroke="url(#spark-grad)" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
   
-  <!-- 'I' dot floating above the right pillar representing AI intelligence -->
-  <circle cx="48" cy="16" r="2.5" fill="#818CF8" filter="url(#kmai-glow)" />
-  <circle cx="48" cy="48" r="2.2" fill="#818CF8" />
+  <!-- M Right Vertical Pillar -->
+  <line x1="48" y1="18" x2="48" y2="48" stroke="url(#spark-grad)" stroke-width="4.8" stroke-linecap="round"/>
 
-  <!-- 5. CENTRAL AI NEURAL CORE (where K, M, and A converge) -->
-  <circle cx="27" cy="32" r="3.8" fill="#070A12" stroke="#5EEAD4" stroke-width="2" />
-  <circle cx="27" cy="32" r="1.8" fill="#5EEAD4" filter="url(#kmai-glow)" />
+  <!-- 4-Point AI Sentience Singularity Spark -->
+  <path d="M48 10 Q48 14 44 14 Q48 14 48 18 Q48 14 52 14 Q48 14 48 10 Z" fill="#5EEAD4" filter="url(#glow-spark)"/>
+  
+  <!-- Center Synaptic AI Focal Node -->
+  <circle cx="27" cy="18" r="2.8" fill="#5EEAD4"/>
 </svg>

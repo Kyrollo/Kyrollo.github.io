@@ -12,7 +12,7 @@ export default function HeroSection() {
     { value: 13, suffix: '', label: 'Projects Shipped' },
     { value: 2, suffix: '+ Yrs', label: 'Applied AI Experience' },
     { value: 40, suffix: '+', label: 'Tools & Frameworks' },
-    { value: 5, suffix: ' Systems', label: 'Autonomous Agents' },
+    { value: 5, suffix: '\u00A0Systems', label: 'Autonomous Agents' },
   ];
 
   return (
@@ -121,7 +121,7 @@ export default function HeroSection() {
             >
               {stats.map((s, idx) => (
                 <div key={idx} className="flex flex-col">
-                  <div className="text-2xl sm:text-3xl font-extrabold text-white font-['Space_Grotesk'] tracking-tight flex items-baseline gap-0.5">
+                  <div className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white font-['Space_Grotesk'] tracking-tight flex items-baseline gap-0.5 whitespace-nowrap">
                     <AnimatedCounter value={s.value} suffix={s.suffix} />
                   </div>
                   <div className="text-xs text-slate-400 font-medium mt-1">
