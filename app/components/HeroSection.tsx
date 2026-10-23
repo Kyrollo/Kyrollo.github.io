@@ -75,7 +75,7 @@ export default function HeroSection() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.45, duration: 0.6 }}
             >
-              I engineer intelligent AI systems that solve real problems — from multi-agent orchestration with LangGraph to production hybrid RAG pipelines that serve real-world workloads. Passionate about transforming cutting-edge AI research into robust, high-performance software.
+              {PROFILE.bio}
             </motion.p>
 
             {/* Call-to-Action Buttons */}
