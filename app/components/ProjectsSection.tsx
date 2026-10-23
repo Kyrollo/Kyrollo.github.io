@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Github, ExternalLink, Sparkles, Star } from 'lucide-react';
+import { ArrowRight, Github, ExternalLink, Sparkles, Star, Play, Video } from 'lucide-react';
 import { ProjectData, PROJECTS_DATA } from '../data/projectsData';
 import TechLogo from './TechLogo';
 
@@ -112,14 +112,29 @@ export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0E121B] via-transparent to-transparent opacity-80" />
 
+                      {/* Play Button Overlay on Hover */}
+                      {project.demoVideo && (
+                        <button
+                          type="button"
+                          onClick={() => onOpenModal?.(project)}
+                          className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/60 transition-all opacity-0 group-hover:opacity-100 z-10 cursor-pointer"
+                          title="Watch 1080p Video Demo"
+                        >
+                          <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#5EEAD4] text-[#070A12] font-bold text-xs shadow-xl shadow-[#5EEAD4]/30 transform group-hover:scale-105 transition-transform">
+                            <Play size={16} className="fill-[#070A12]" />
+                            <span>Play 1080p Video Demo</span>
+                          </div>
+                        </button>
+                      )}
+
                       {/* Featured Amber Ribbon */}
-                      <div className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FBBF24]/15 border border-[#FBBF24]/40 text-[#FBBF24] text-xs font-semibold backdrop-blur-md">
+                      <div className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FBBF24]/15 border border-[#FBBF24]/40 text-[#FBBF24] text-xs font-semibold backdrop-blur-md z-20">
                         <Star size={12} className="fill-[#FBBF24]" />
                         <span>Featured Flagship</span>
                       </div>
 
                       {/* Category Pill */}
-                      <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-[#070A12]/80 border border-slate-700 text-slate-300 text-xs font-mono backdrop-blur-md">
+                      <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-[#070A12]/80 border border-slate-700 text-slate-300 text-xs font-mono backdrop-blur-md z-20">
                         {project.category}
                       </div>
                     </div>
@@ -180,12 +195,23 @@ export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
                   </div>
 
                   {/* Card Bottom CTA */}
-                  <div className="px-6 sm:px-8 pb-6 sm:pb-8 pt-0">
+                  <div className="px-6 sm:px-8 pb-6 sm:pb-8 pt-0 flex flex-col sm:flex-row gap-3">
+                    {project.demoVideo && (
+                      <button
+                        type="button"
+                        onClick={() => onOpenModal?.(project)}
+                        className="flex-1 inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-[#5EEAD4]/15 hover:bg-[#5EEAD4] text-[#5EEAD4] hover:text-[#070A12] text-sm font-semibold border border-[#5EEAD4]/40 hover:border-[#5EEAD4] transition-all duration-200 cursor-pointer shadow-lg shadow-[#5EEAD4]/10"
+                        title="Watch 1080p Recorded Session"
+                      >
+                        <Play size={15} className="fill-current" />
+                        <span>Watch 1080p Demo</span>
+                      </button>
+                    )}
                     <Link
                       href={`/projects/${project.id}`}
-                      className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-[#151B27] hover:bg-[#5EEAD4] text-slate-200 hover:text-[#070A12] text-sm font-semibold border border-slate-700/80 hover:border-[#5EEAD4] transition-all duration-200 group/link"
+                      className="flex-1 inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-[#151B27] hover:bg-[#1E2638] text-slate-200 hover:text-white text-sm font-semibold border border-slate-700/80 hover:border-slate-600 transition-all duration-200 group/link text-center"
                     >
-                      <span>Read Case Study</span>
+                      <span>Case Study</span>
                       <ArrowRight size={15} className="group-hover/link:translate-x-1 transition-transform" />
                     </Link>
                   </div>
@@ -239,7 +265,21 @@ export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
                         style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
                         loading="lazy"
                       />
-                      <div className="absolute top-3 right-3 px-2.5 py-0.5 rounded-full bg-[#070A12]/80 border border-slate-700 text-slate-300 text-[11px] font-mono backdrop-blur-md">
+                      {/* Play Button Overlay on Hover */}
+                      {project.demoVideo && (
+                        <button
+                          type="button"
+                          onClick={() => onOpenModal?.(project)}
+                          className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/60 transition-all opacity-0 group-hover:opacity-100 z-10 cursor-pointer"
+                          title="Watch 1080p Video Demo"
+                        >
+                          <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#5EEAD4] text-[#070A12] font-bold text-xs shadow-lg shadow-[#5EEAD4]/30 transform group-hover:scale-105 transition-transform">
+                            <Play size={13} className="fill-[#070A12]" />
+                            <span>Play Demo</span>
+                          </div>
+                        </button>
+                      )}
+                      <div className="absolute top-3 right-3 px-2.5 py-0.5 rounded-full bg-[#070A12]/80 border border-slate-700 text-slate-300 text-[11px] font-mono backdrop-blur-md z-20">
                         {project.category}
                       </div>
                     </div>
@@ -295,14 +335,25 @@ export default function ProjectsSection({ onOpenModal }: ProjectsSectionProps) {
                     </div>
                   </div>
 
-                  {/* Card Bottom Link */}
-                  <div className="p-5 sm:p-6 pt-0">
+                  {/* Card Bottom CTA */}
+                  <div className="p-5 sm:p-6 pt-0 flex gap-2">
+                    {project.demoVideo && (
+                      <button
+                        type="button"
+                        onClick={() => onOpenModal?.(project)}
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-[#5EEAD4]/15 hover:bg-[#5EEAD4] text-xs font-semibold text-[#5EEAD4] hover:text-[#070A12] border border-[#5EEAD4]/40 hover:border-[#5EEAD4] transition-all duration-200 cursor-pointer"
+                        title="Watch 1080p Demo"
+                      >
+                        <Play size={12} className="fill-current" />
+                        <span>Watch Demo</span>
+                      </button>
+                    )}
                     <Link
                       href={`/projects/${project.id}`}
-                      className="w-full inline-flex items-center justify-between py-2.5 px-4 rounded-xl bg-[#151B27]/80 hover:bg-[#5EEAD4] text-xs font-semibold text-slate-200 hover:text-[#070A12] border border-slate-800 hover:border-[#5EEAD4] transition-all duration-200 group/btn"
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-[#151B27]/80 hover:bg-[#1E2638] text-xs font-semibold text-slate-200 hover:text-white border border-slate-800 hover:border-slate-700 transition-all duration-200 group/btn text-center"
                     >
-                      <span>Read Case Study</span>
-                      <ArrowRight size={13} className="group-hover/btn:translate-x-1 transition-transform" />
+                      <span>Case Study</span>
+                      <ArrowRight size={12} className="group-hover/btn:translate-x-1 transition-transform" />
                     </Link>
                   </div>
                 </motion.div>

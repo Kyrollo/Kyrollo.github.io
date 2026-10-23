@@ -173,17 +173,25 @@ export default function ProjectDetailClient({
           {/* Media Display Container */}
           <div className="rounded-3xl p-4 sm:p-6 bg-[#0E121B] border border-slate-800 overflow-hidden shadow-2xl">
             {activeMediaTab === 'video' && project.demoVideo ? (
-              <div className="relative rounded-2xl overflow-hidden bg-black aspect-video flex items-center justify-center">
+              <div className="relative rounded-2xl overflow-hidden bg-black aspect-video flex items-center justify-center border border-slate-800">
                 <video
-                  src={project.demoVideo}
+                  key={project.demoVideo}
                   controls
+                  autoPlay
+                  muted
+                  loop
                   playsInline
+                  preload="auto"
                   className="w-full h-full object-contain"
                   poster={project.screenshots[0]?.src}
-                />
+                >
+                  <source src={project.demoVideo} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
                 <div className="absolute top-4 left-4 flex gap-2 pointer-events-none">
-                  <span className="text-[11px] font-bold px-3 py-1 rounded-md bg-[#070A12]/80 border border-slate-700 text-[#5EEAD4] backdrop-blur-md">
-                    Technical Walkthrough
+                  <span className="text-[11px] font-bold px-3 py-1 rounded-md bg-[#070A12]/80 border border-slate-700 text-[#5EEAD4] backdrop-blur-md flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                    1080p Recorded Session
                   </span>
                 </div>
               </div>

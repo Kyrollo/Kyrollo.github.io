@@ -11,7 +11,9 @@ import {
   CheckCircle2, 
   Cpu, 
   ShieldCheck,
-  Maximize2
+  Maximize2,
+  Video,
+  Play
 } from 'lucide-react';
 import { ProjectData } from '../data/projectsData';
 import Lightbox from './Lightbox';
@@ -22,9 +24,15 @@ interface ProjectModalProps {
 }
 
 export default function ProjectModal({ project, onClose }: ProjectModalProps) {
-  const [activeTab, setActiveTab] = useState<'architecture' | 'screenshots' | 'tech' | 'metrics'>('architecture');
+  const [activeTab, setActiveTab] = useState<'video' | 'architecture' | 'screenshots' | 'tech' | 'metrics'>('video');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  useEffect(() => {
+    if (project) {
+      setActiveTab(project.demoVideo ? 'video' : 'architecture');
+    }
+  }, [project]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -76,6 +84,15 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
         {/* Modal Navigation Tabs */}
         <div className="modal-tabs-bar">
+          {project.demoVideo && (
+            <button
+              className={`modal-tab ${activeTab === 'video' ? 'active' : ''}`}
+              onClick={() => setActiveTab('video')}
+            >
+              <Video size={16} />
+              <span>1080p Video Demo</span>
+            </button>
+          )}
           <button
             className={`modal-tab ${activeTab === 'architecture' ? 'active' : ''}`}
             onClick={() => setActiveTab('architecture')}
@@ -108,6 +125,49 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
         {/* Modal Body Content */}
         <div className="modal-body">
+          {/* TAB 0: 1080p Video Demo */}
+          {activeTab === 'video' && project.demoVideo && (
+            <div className="modal-content-section">
+              <div className="relative rounded-2xl overflow-hidden bg-black aspect-video flex items-center justify-center border border-slate-800 shadow-2xl mb-6">
+                <video
+                  key={project.demoVideo}
+                  controls
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  poster={project.screenshots[0]?.src}
+                  className="w-full h-full object-contain"
+                >
+                  <source src={project.demoVideo} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                <div className="absolute top-4 left-4 flex items-center gap-2 pointer-events-none">
+                  <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#070A12]/80 border border-slate-700 text-[#5EEAD4] text-xs font-mono backdrop-blur-md">
+                    <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                    1080p Recorded Session
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center justify-between p-4 rounded-xl bg-[#0E121B] border border-slate-800">
+                <div className="flex items-center gap-2">
+                  <Video size={16} className="text-[#5EEAD4]" />
+                  <span className="text-xs text-slate-300 font-medium">Recorded in production environment with live model inference.</span>
+                </div>
+                <a 
+                  href={project.demoVideo} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-xs text-[#5EEAD4] hover:underline flex items-center gap-1 font-mono"
+                >
+                  <span>Open raw MP4</span>
+                  <ExternalLink size={12} />
+                </a>
+              </div>
+            </div>
+          )}
+
           {/* TAB 1: Architecture & Dataflow */}
           {activeTab === 'architecture' && (
             <div className="modal-content-section">
